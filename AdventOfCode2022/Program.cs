@@ -38,21 +38,17 @@ for (int i = 0; i < rucksacks.Count()-2; i = i + 3)
     string rucksack2 = rucksacks[i + 1];
     string rucksack3 = rucksacks[i + 2];
     string isManyTimes = "";
-    Console.WriteLine(rucksack1);
-    Console.WriteLine(rucksack2);
-    Console.WriteLine(rucksack3);
+    rucksack1 = rucksack1.Remove(rucksack1.Length - 1); //Removes whitespace character 
     foreach (char item in rucksack1)
     {
         int priority = 0;
         if (rucksack2.Contains(item) && rucksack3.Contains(item) && !(isManyTimes.Contains(item)))
         {
             isManyTimes += item;
-            Console.WriteLine(item);
             if (Char.IsUpper(item))
                 priority = item - 64 + 26;
             else
                 priority = item - 96;
-            Console.WriteLine(priority);
             allprioritiesPartTwo += priority;
         }
     }
