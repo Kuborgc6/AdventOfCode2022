@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 Console.WriteLine("Day 5!");
 
@@ -32,7 +33,7 @@ for (int i = 0; i < containersNumber; i++)
 
 for (int i = 0; i < containersNumber; i++)
     while (Char.IsWhiteSpace(containers[i], (containers[i].Length - 1)))
-        containers[i] = containers[i].Remove(containers[i].Length - 1);
+        containers[i] = containers[i].Remove(containers[i].Length - 1);//can use trim()
 
 for (int i = 0; i < containersNumber; i++)
 {
@@ -53,4 +54,29 @@ for (int i = 0; i < procdureLines.Length; i++)
 {
     ordersNumbers[i] = string.Concat(procdureLines[i].Where(Char.IsDigit));
 }
-Console.WriteLine(ordersNumbers[1]);
+
+foreach (string orders in ordersNumbers)
+{
+    string tempOrders = orders;
+    int finalCon = int.Parse(tempOrders[tempOrders.Length - 1].ToString());
+    tempOrders = tempOrders.Remove(tempOrders.Length - 1);
+
+    int originCon = int.Parse(tempOrders[tempOrders.Length - 1].ToString());
+    tempOrders = tempOrders.Remove(tempOrders.Length - 1);
+
+    int howMany = int.Parse(tempOrders.ToString());
+    for (int i = 0; i < howMany; i++)
+    {
+        char item = containers[originCon - 1][containers[originCon - 1].Length - 1];
+        containers[originCon - 1] = containers[originCon - 1].Remove(containers[originCon - 1].Length - 1);
+        containers[finalCon - 1] += item;
+    }
+}
+
+string result = "";
+foreach (string container in containers)
+{
+    result += container[container.Length - 1];
+}
+
+Console.WriteLine(result);
