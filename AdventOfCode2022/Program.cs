@@ -28,11 +28,10 @@ for (int i = 0; i < containersNumber; i++)
     char[] charTemp = containers[i].ToCharArray();
     Array.Reverse(charTemp);
     containers[i] = new string(charTemp);
+    containers[i] = containers[i].Trim(); // Using Trim()
 }
 
-for (int i = 0; i < containersNumber; i++)
-    while (Char.IsWhiteSpace(containers[i], (containers[i].Length - 1)))
-        containers[i] = containers[i].Remove(containers[i].Length - 1);//can use trim()
+
 
 string[] procdureLines = devision[1].Split("\n");
 string[] ordersNumbers = new string[procdureLines.Length];
