@@ -9,7 +9,6 @@ string sFilePath = Path.GetFullPath(sFile);
 string textInput = @File.ReadAllText(sFilePath);
 
 string[] devision = textInput.Split("\r\n\r\n");
-Console.WriteLine(devision[0]);
 string[] containersLines = devision[0].Split("\n");
 
 // number of containers = length/4
@@ -34,19 +33,6 @@ for (int i = 0; i < containersNumber; i++)
 for (int i = 0; i < containersNumber; i++)
     while (Char.IsWhiteSpace(containers[i], (containers[i].Length - 1)))
         containers[i] = containers[i].Remove(containers[i].Length - 1);//can use trim()
-
-for (int i = 0; i < containersNumber; i++)
-{
-    Console.WriteLine("Container: " + (i + 1));
-    Console.WriteLine(containers[i]);
-    Console.WriteLine(containers[i].Length-1);
-}
-
-Console.WriteLine();
-Console.WriteLine("Taking care of procedure");
-Console.WriteLine();
-
-Console.WriteLine(devision[1]);
 
 string[] procdureLines = devision[1].Split("\n");
 string[] ordersNumbers = new string[procdureLines.Length];
