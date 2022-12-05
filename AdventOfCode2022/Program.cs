@@ -79,4 +79,4 @@ foreach (string container in containers)
     result += container[container.Length - 1];
 }
 
-Console.WriteLine(result);
+Console.WriteLine("Crates that end up on top of each stack are: " + result);
