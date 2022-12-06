@@ -9,9 +9,9 @@ string sFilePath = Path.GetFullPath(sFile);
 string textInput = @File.ReadAllText(sFilePath);
 
 string[] devision = textInput.Split("\r\n\r\n");
-string[] containersLines = devision[0].Split("\n");
 
-// number of containers = length/4
+//Change from graphic presentation of containers to list that contains elements of containers 
+string[] containersLines = devision[0].Split("\n"); // number of containers = length/4
 int containersNumber = containersLines[0].Length / 4;
 
 string[] containers = new string[containersNumber];
@@ -31,7 +31,7 @@ for (int i = 0; i < containersNumber; i++)
     containers[i] = containers[i].Trim(); // Using Trim()
 }
 
-List<string> containersOriginal = new List<string>(containers);
+List<string> containersOriginal = new List<string>(containers);//needed for second half of day
 
 
 string[] procdureLines = devision[1].Split("\n");
