@@ -31,6 +31,7 @@ for (int i = 0; i < containersNumber; i++)
     containers[i] = containers[i].Trim(); // Using Trim()
 }
 
+List<string> containersOriginal = new List<string>(containers);
 
 
 string[] procdureLines = devision[1].Split("\n");
@@ -65,3 +66,29 @@ foreach (string container in containers)
 }
 
 Console.WriteLine("Crates that end up on top of each stack are: " + result);
+
+//-----------------
+Console.WriteLine("Working on second half of Day 5!");
+
+foreach (string orders in ordersNumbers)
+{
+    string tempOrders = orders;
+    int finalCon = int.Parse(tempOrders[tempOrders.Length - 1].ToString());
+    tempOrders = tempOrders.Remove(tempOrders.Length - 1);
+
+    int originCon = int.Parse(tempOrders[tempOrders.Length - 1].ToString());
+    tempOrders = tempOrders.Remove(tempOrders.Length - 1);
+
+    int howMany = int.Parse(tempOrders.ToString());
+    string item = containersOriginal[originCon - 1].Substring(containersOriginal[originCon - 1].Length - howMany, howMany);
+    containersOriginal[originCon - 1] = containersOriginal[originCon - 1].Substring(0, containersOriginal[originCon - 1].Length - howMany);
+    containersOriginal[finalCon - 1] += item;
+}
+
+result = "";
+foreach (string container in containersOriginal)
+{
+    result += container[container.Length - 1];
+}
+
+Console.WriteLine("Using CrateMover 9001 crates that end up on top of each stack are: " + result);
