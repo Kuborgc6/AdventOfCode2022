@@ -13,7 +13,7 @@ public class folderDirectory
         int howMany = 0;
         if (this.subdirectories.Count > 0) 
         {
-            Console.WriteLine("Debug 0: "+result);
+            Console.WriteLine("Debug 0: " + result);
             foreach (folderDirectory tempFolder in this.subdirectories)
             {
                 Console.WriteLine("Debug 1: " + tempFolder.currentFolder);
@@ -21,15 +21,17 @@ public class folderDirectory
                 result += resultTemp;
                 howMany += howManyTemp;
             }
+            this.size += result;
+            result = this.size;
         }
         else
         {
             result = this.size;
+            Console.WriteLine("Debug 2: " + result);
         }
-        this.size = result;
-
-        if (this.size > 100000)
-            howMany += 1;
+            
+        if (this.size <= 100000)
+            howMany += this.size;
 
         this.correctSize = howMany;
 
@@ -68,7 +70,7 @@ class Program
             {
                 mainFolder.currentFolder = splitLine[2];
                 tempFolder = mainFolder;
-                Console.WriteLine(line);
+                //Console.WriteLine(line);
             }
             else if (line == "$ cd ..")
             {
@@ -78,20 +80,20 @@ class Program
                 {
                     tempFolder = tempFolder.subdirectories.Find(x => x.currentFolder == oneDirectory);
                 }
-                Console.WriteLine(line);
+                //Console.WriteLine(line);
             }
             else if (splitLine[0] == "$" && splitLine[1] == "cd" )
             {
-                Console.WriteLine(tempFolder.currentFolder);
+                //Console.WriteLine(tempFolder.currentFolder);
                 directory.Add(splitLine[2]);
                 tempFolder = tempFolder.subdirectories.Find(x => x.currentFolder == splitLine[2]);
-                Console.WriteLine(tempFolder.currentFolder);
+                //Console.WriteLine(tempFolder.currentFolder);
 
-                Console.WriteLine(line);
+                //Console.WriteLine(line);
             }
             else if (line == "$ ls")
             {
-                Console.WriteLine(line);
+                //Console.WriteLine(line);
             }
             else if (splitLine[0] != "dir" && splitLine[0] != "$")
             {
@@ -104,6 +106,8 @@ class Program
                 tempFolder.subdirectories.Add(subfolder);
             }
         }
+        Console.WriteLine("End line");
+
         (int resultSize, int resultFolders) = mainFolder.calculateChildrenSize();
         Console.WriteLine("Result Size: " + resultSize);
         Console.WriteLine("Result Folders: " + resultFolders);
