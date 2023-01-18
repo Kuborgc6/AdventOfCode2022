@@ -62,7 +62,7 @@ class Program
             }
         }
 
-        //from up left corner from up to down
+        //from up left corner from down to up
         for (int j = 0; j < colsOrWidth; j++)
         {
             int highestTree = -1;
@@ -88,6 +88,24 @@ class Program
             }
         }
         return result;
+    }
+
+    public int getScenicScore(TreeCount[,] forest)
+    {
+        int result = 0;
+        int rowsOrHeight = forest.GetLength(0);
+        int colsOrWidth = forest.GetLength(1);
+
+        for (int i = 0; i < rowsOrHeight; i++)
+        {
+            for (int j = 0; j < colsOrWidth; j++)
+            {
+
+            }
+        }
+
+
+                return result;
     }
 
     static void Main()
