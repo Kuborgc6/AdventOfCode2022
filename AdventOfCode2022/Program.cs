@@ -93,19 +93,95 @@ class Program
     public int getScenicScore(TreeCount[,] forest)
     {
         int result = 0;
-        int rowsOrHeight = forest.GetLength(0);
-        int colsOrWidth = forest.GetLength(1);
+        int rows = forest.GetLength(0);
+        int columns = forest.GetLength(1);
 
-        for (int i = 0; i < rowsOrHeight; i++)
+        for (int row = 0; row < rows; row++)
         {
-            for (int j = 0; j < colsOrWidth; j++)
+            for (int column = 0; column < columns; column++)
             {
+                if ((row == 4) && (column == 3))
+                    Console.WriteLine();
 
+                int actualTree = forest[row, column].height;
+
+                int resultTemp = 1;
+                int temp = 0;
+                int maxSeen = -1;
+                int testMax = 9;
+                for (int i = (row+1); i < rows; i++)
+                {
+                    if ((forest[i, column].height < testMax) && (forest[i, column].height > maxSeen))
+                    {
+                        temp++;
+                    }
+                    if ((forest[i, column].height >= actualTree) && (forest[i, column].height > maxSeen))
+                    {
+                        maxSeen = forest[i, column].height;
+                        testMax = maxSeen;
+                    }
+                }
+                if (temp > 0)
+                    resultTemp = resultTemp * temp;
+                temp = 0;
+                maxSeen = -1;
+                testMax = 9;
+                for (int i = (row-1); i >= 0; i--)
+                {
+                    if ((forest[i, column].height < testMax) && (forest[i, column].height > maxSeen))
+                    {
+                        temp++;
+                    }
+                    if ((forest[i, column].height >= actualTree) && (forest[i, column].height > maxSeen))
+                    {
+                        maxSeen = forest[i, column].height;
+                        testMax = maxSeen;
+                    }
+                }
+
+                if (temp > 0)
+                    resultTemp = resultTemp * temp;
+                temp = 0;
+                maxSeen = -1;
+                testMax = 9;
+                for (int i = column + 1; i < columns; i++)
+                {
+                    if ((forest[row, i].height < testMax) && (forest[i, column].height > maxSeen))
+                    {
+                        temp++;
+                    }
+                    if ((forest[row, i].height >= actualTree) && (forest[row, i].height > maxSeen))
+                    {
+                        maxSeen = forest[row, i].height;
+                        testMax = maxSeen;
+                    }
+                }
+
+                if (temp > 0)
+                    resultTemp = resultTemp * temp;
+                temp = 0;
+                maxSeen = -1;
+                testMax = 9;
+                for (int i = column - 1; i >= 0; i--)
+                {
+                    if ((forest[row, i].height < testMax) && (forest[i, column].height > maxSeen))
+                    {
+                        temp++;
+                    }
+                    if ((forest[row, i].height >= actualTree) && (forest[row, i].height > maxSeen))
+                    {
+                        maxSeen = forest[row, i].height;
+                        testMax = maxSeen;
+                    }
+                }
+                if (temp > 0)
+                    resultTemp = resultTemp * temp;
+                if (resultTemp > result)
+                    result = resultTemp;
             }
         }
 
-
-                return result;
+        return result;
     }
 
     static void Main()
@@ -147,5 +223,8 @@ class Program
         var p = new Program();
         int result = p.visibleTrees(forest);
         Console.WriteLine("All visible trees: " + result);
+
+        result = p.getScenicScore(forest);
+        Console.WriteLine("Visible trees score: " + result);
     }
 }
