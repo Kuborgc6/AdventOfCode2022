@@ -100,16 +100,13 @@ class Program
         {
             for (int column = 0; column < columns; column++)
             {
-                if ((row == 4) && (column == 3))
-                    Console.WriteLine();
-
                 int actualTree = forest[row, column].height;
 
                 int resultTemp = 1;
                 int temp = 0;
                 int maxSeen = -1;
-                int testMax = 9;
-                for (int i = (row+1); i < rows; i++)
+                int testMax = 10;
+                for (int i = (row+1); i < rows; i++) //looking down
                 {
                     if ((forest[i, column].height < testMax) && (forest[i, column].height > maxSeen))
                     {
@@ -122,11 +119,11 @@ class Program
                     }
                 }
                 if (temp > 0)
-                    resultTemp = resultTemp * temp;
+                    resultTemp *= temp;
                 temp = 0;
                 maxSeen = -1;
-                testMax = 9;
-                for (int i = (row-1); i >= 0; i--)
+                testMax = 10;
+                for (int i = (row-1); i >= 0; i--) //looking up
                 {
                     if ((forest[i, column].height < testMax) && (forest[i, column].height > maxSeen))
                     {
@@ -140,13 +137,13 @@ class Program
                 }
 
                 if (temp > 0)
-                    resultTemp = resultTemp * temp;
+                    resultTemp *= temp;
                 temp = 0;
                 maxSeen = -1;
-                testMax = 9;
-                for (int i = column + 1; i < columns; i++)
+                testMax = 10;
+                for (int i = column + 1; i < columns; i++) //looking right
                 {
-                    if ((forest[row, i].height < testMax) && (forest[i, column].height > maxSeen))
+                    if ((forest[row, i].height < testMax) && (forest[row, i].height > maxSeen))
                     {
                         temp++;
                     }
@@ -158,13 +155,13 @@ class Program
                 }
 
                 if (temp > 0)
-                    resultTemp = resultTemp * temp;
+                    resultTemp *= temp;
                 temp = 0;
                 maxSeen = -1;
-                testMax = 9;
-                for (int i = column - 1; i >= 0; i--)
+                testMax = 10;
+                for (int i = column - 1; i >= 0; i--) //looking left
                 {
-                    if ((forest[row, i].height < testMax) && (forest[i, column].height > maxSeen))
+                    if ((forest[row, i].height < testMax) && (forest[row, i].height > maxSeen))
                     {
                         temp++;
                     }
@@ -175,7 +172,9 @@ class Program
                     }
                 }
                 if (temp > 0)
-                    resultTemp = resultTemp * temp;
+                    resultTemp *= temp;
+                if ((row == 0) || (column == 0) || (row == rows-1) ||  (column == columns-1)) //
+                    resultTemp = 0;
                 if (resultTemp > result)
                     result = resultTemp;
             }
