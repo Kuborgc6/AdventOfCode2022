@@ -24,24 +24,41 @@ class Program
         return result;
     }
     
-    List<int> CheckUp(List<int> coorH, List<int> coorT)
+    List<int> Check(List<int> coorH, List<int> coorT)
     {
-        if ((Math.Abs(coorH[0] - coorT[0]) == 1) && (Math.Abs(coorH[1] - coorT[1]) > 1))
+        if ((Math.Abs(coorH[0] - coorT[0]) >= 1) && (Math.Abs(coorH[1] - coorT[1]) > 1) ||
+            (Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) >= 1))
         {
             if (coorH[0] - coorT[0] > 0)
                 coorT[0]++;
             else
                 coorT[0]--;
-            coorT[1]++;
+            if (coorH[1] - coorT[1] > 0)
+                coorT[1]++;
+            else
+                coorT[1]--;
         }
-        else if ((Math.Abs(coorH[0] - coorT[0]) > 1) || (Math.Abs(coorH[1] - coorT[1]) > 1))
-            coorT[1]++;
+        else if ((Math.Abs(coorH[0] - coorT[0]) > 1))
+        {
+            if (coorH[0] - coorT[0] > 0)
+                coorT[0]++;
+            else
+                coorT[0]--;
+        }
+        else if ((Math.Abs(coorH[1] - coorT[1]) > 1))
+        {
+            if (coorH[1] - coorT[1] > 0)
+                coorT[1]++;
+            else
+                coorT[1]--;
+        }
         return coorT;
     }
 
     List<int> CheckDown(List<int> coorH, List<int> coorT)
     {
-        if ((Math.Abs(coorH[0] - coorT[0]) == 1) && (Math.Abs(coorH[1] - coorT[1]) > 1))
+        if ((Math.Abs(coorH[0] - coorT[0]) >= 1) && (Math.Abs(coorH[1] - coorT[1]) > 1) ||
+            (Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) >= 1))
         {
             if (coorH[0] - coorT[0] > 0)
                 coorT[0]++;
@@ -49,16 +66,28 @@ class Program
                 coorT[0]--;
             coorT[1]--;
         }
-        else if ((Math.Abs(coorH[0] - coorT[0]) > 1) || (Math.Abs(coorH[1] - coorT[1]) > 1))
+        else if ((Math.Abs(coorH[0] - coorT[0]) > 1))
         {
-            coorT[1]--;
+            if (coorH[0] - coorT[0] > 0)
+                coorT[0]++;
+            else
+                coorT[0]--;
         }
+        else if ((Math.Abs(coorH[1] - coorT[1]) > 1))
+        {
+            if (coorH[1] - coorT[1] > 0)
+                coorT[1]++;
+            else
+                coorT[1]--;
+        }
+
         return coorT;
     }
 
     List<int> CheckRight(List<int> coorH, List<int> coorT)
     {
-        if ((Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) == 1))
+        if ((Math.Abs(coorH[0] - coorT[0]) >= 1) && (Math.Abs(coorH[1] - coorT[1]) > 1) ||
+            (Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) >= 1))
         {
             coorT[0]++;
             if (coorH[1] - coorT[1] > 0)
@@ -66,16 +95,24 @@ class Program
             else
                 coorT[1]--;
         }
-        else if ((Math.Abs(coorH[0] - coorT[0]) > 1) || (Math.Abs(coorH[1] - coorT[1]) > 1))
+        else if ((Math.Abs(coorH[0] - coorT[0]) > 1))
         {
             coorT[0]++;
+        }
+        else if ((Math.Abs(coorH[1] - coorT[1]) > 1))
+        {
+            if (coorH[1] - coorT[1] > 0)
+                coorT[1]++;
+            else
+                coorT[1]--;
         }
         return coorT;
     }
 
     List<int> CheckLeft(List<int> coorH, List<int> coorT)
     {
-        if ((Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) == 1))
+        if ((Math.Abs(coorH[0] - coorT[0]) >= 1) && (Math.Abs(coorH[1] - coorT[1]) > 1) ||
+            (Math.Abs(coorH[0] - coorT[0]) > 1) && (Math.Abs(coorH[1] - coorT[1]) >= 1))
         {
             coorT[0]--;
             if (coorH[1] - coorT[1] > 0)
@@ -83,9 +120,16 @@ class Program
             else
                 coorT[1]--;
         }
-        else if ((Math.Abs(coorH[0] - coorT[0]) > 1) || (Math.Abs(coorH[1] - coorT[1]) > 1))
+        else if ((Math.Abs(coorH[0] - coorT[0]) > 1))
         {
             coorT[0]--;
+        }
+        else if ((Math.Abs(coorH[1] - coorT[1]) > 1))
+        {
+            if (coorH[1] - coorT[1] > 0)
+                coorT[1]++;
+            else
+                coorT[1]--;
         }
         return coorT;
     }
@@ -102,10 +146,21 @@ class Program
             textInput[i] = textInput[i].Trim();
 
         List<int> coorH = new List<int> { 0, 0 };
-        List<int> coorT = new List<int> { 0, 0 };
-        List<List<int>> coorSave = new List<List<int>>();
-        List<int> CoorTtemp= new List<int>(coorT);
-        coorSave.Add(CoorTtemp);
+        List<int> coorT1 = new List<int> { 0, 0 };
+        List<int> coorT2 = new List<int> { 0, 0 };
+        List<int> coorT3 = new List<int> { 0, 0 };
+        List<int> coorT4 = new List<int> { 0, 0 };
+        List<int> coorT5 = new List<int> { 0, 0 };
+        List<int> coorT6 = new List<int> { 0, 0 };
+        List<int> coorT7 = new List<int> { 0, 0 };
+        List<int> coorT8 = new List<int> { 0, 0 };
+        List<int> coorT9 = new List<int> { 0, 0 };
+
+        List<List<int>> coorSave1 = new List<List<int>>();
+        List<List<int>> coorSave9 = new List<List<int>>();
+        List<int> CoorTtemp= new List<int>(coorT1);
+        coorSave1.Add(CoorTtemp);
+        coorSave9.Add(CoorTtemp);
         Program p = new Program();
 
         foreach (String line in textInput)
@@ -118,9 +173,20 @@ class Program
                     for (int j = 0; j < distance; j++)
                     {
                         coorH[1]++;
-                        coorT = p.CheckUp(coorH, coorT);
-                        List<int> copyCoorT = new List<int>(coorT);
-                        coorSave.Add(copyCoorT);
+                        coorT1 = p.Check(coorH, coorT1);
+                        coorT2 = p.Check(coorT1, coorT2);
+                        coorT3 = p.Check(coorT2, coorT3);
+                        coorT4 = p.Check(coorT3, coorT4);
+                        coorT5 = p.Check(coorT4, coorT5);
+                        coorT6 = p.Check(coorT5, coorT6);
+                        coorT7 = p.Check(coorT6, coorT7);
+                        coorT8 = p.Check(coorT7, coorT8);
+                        coorT9 = p.Check(coorT8, coorT9);
+
+                        List<int> copyCoorT1 = new List<int>(coorT1);
+                        List<int> copyCoorT9 = new List<int>(coorT9);
+                        coorSave1.Add(copyCoorT1);
+                        coorSave9.Add(copyCoorT9);
                     }
                     break;
 
@@ -128,35 +194,70 @@ class Program
                     for (int j = 0; j < distance; j++)
                     {
                         coorH[1]--;
-                        coorT = p.CheckDown(coorH, coorT);
-                        List<int> copyCoorT = new List<int>(coorT);
-                        coorSave.Add(copyCoorT);
+                        coorT1 = p.Check(coorH, coorT1);
+                        coorT2 = p.Check(coorT1, coorT2);
+                        coorT3 = p.Check(coorT2, coorT3);
+                        coorT4 = p.Check(coorT3, coorT4);
+                        coorT5 = p.Check(coorT4, coorT5);
+                        coorT6 = p.Check(coorT5, coorT6);
+                        coorT7 = p.Check(coorT6, coorT7);
+                        coorT8 = p.Check(coorT7, coorT8);
+                        coorT9 = p.Check(coorT8, coorT9);
+
+                        List<int> copyCoorT1 = new List<int>(coorT1);
+                        List<int> copyCoorT9 = new List<int>(coorT9);
+                        coorSave1.Add(copyCoorT1);
+                        coorSave9.Add(copyCoorT9);
                     }
                     break;
                 case 'R':
                     for (int j = 0; j < distance; j++)
                     {
                         coorH[0]++;
-                        coorT = p.CheckRight(coorH, coorT);
-                        List<int> copyCoorT = new List<int>(coorT);
-                        coorSave.Add(copyCoorT);
+                        coorT1 = p.Check(coorH, coorT1);
+                        coorT2 = p.Check(coorT1, coorT2);
+                        coorT3 = p.Check(coorT2, coorT3);
+                        coorT4 = p.Check(coorT3, coorT4);
+                        coorT5 = p.Check(coorT4, coorT5);
+                        coorT6 = p.Check(coorT5, coorT6);
+                        coorT7 = p.Check(coorT6, coorT7);
+                        coorT8 = p.Check(coorT7, coorT8);
+                        coorT9 = p.Check(coorT8, coorT9);
+
+                        List<int> copyCoorT1 = new List<int>(coorT1);
+                        List<int> copyCoorT9 = new List<int>(coorT9);
+                        coorSave1.Add(copyCoorT1);
+                        coorSave9.Add(copyCoorT9);
                     }
                     break;
                 case 'L':
                     for (int j = 0; j < distance; j++)
                     {
                         coorH[0]--;
-                        coorT = p.CheckLeft(coorH, coorT);
-                        List<int> copyCoorT = new List<int>(coorT);
-                        coorSave.Add(copyCoorT);
+                        coorT1 = p.Check(coorH, coorT1);
+                        coorT2 = p.Check(coorT1, coorT2);
+                        coorT3 = p.Check(coorT2, coorT3);
+                        coorT4 = p.Check(coorT3, coorT4);
+                        coorT5 = p.Check(coorT4, coorT5);
+                        coorT6 = p.Check(coorT5, coorT6);
+                        coorT7 = p.Check(coorT6, coorT7);
+                        coorT8 = p.Check(coorT7, coorT8);
+                        coorT9 = p.Check(coorT8, coorT9);
+
+                        List<int> copyCoorT1 = new List<int>(coorT1);
+                        List<int> copyCoorT9 = new List<int>(coorT9);
+                        coorSave1.Add(copyCoorT1);
+                        coorSave9.Add(copyCoorT9);
                     }
                     break;
             }
         }
 
-        List<List<int>> distinctList = p.DistinctList(coorSave);
+        List<List<int>> distinctList1 = p.DistinctList(coorSave1);
+        List<List<int>> distinctList9 = p.DistinctList(coorSave9);
         Console.WriteLine("\nDistinct list");
 
-        Console.WriteLine("Number of positions: " + distinctList.Count);
+        Console.WriteLine("Number of positions of 1: " + distinctList1.Count);
+        Console.WriteLine("Number of positions of 9: " + distinctList9.Count);
     }
 }
