@@ -1,5 +1,26 @@
 ﻿class Program
 {
+    List<List<int>> DistinctList(List<List<int>> coorSave)
+    {
+        List<List<int>> result = new List<List<int>>();
+        foreach (var coor in coorSave)
+        {
+            if (result.Count == 0)
+                result.Add(coor);
+            else
+            {
+                bool check = false;
+                foreach (var item in result)
+                {
+                    if ((item[0] == coor[0]) && (item[1] == coor[1]))
+                        check = true;
+                }
+                if (check == false)
+                    result.Add(coor);
+            }
+        }
+        return result;
+    }
     static void Main()
     {
         Console.WriteLine("Hello Advent of Code 2022!");
@@ -144,16 +165,11 @@
                     break;
             }
         }
-        foreach (List<int> coorTemp in coorSave)
-        {
-            Console.WriteLine("x: " + coorTemp[0] + "\ty: " + coorTemp[1]);
-        }
-        List<List<int>> distinctList = coorSave.Distinct().ToList();
+
+        Program p = new Program();
+        List<List<int>> distinctList = p.DistinctList(coorSave);
         Console.WriteLine("\nDistinct list");
-        foreach (List<int> coorTemp in distinctList)
-        {
-            Console.WriteLine("x: " + coorTemp[0] + "\ty: " + coorTemp[1]);
-        }
-        Console.WriteLine("Number of positions: "+coorSave.Count);
+
+        Console.WriteLine("Number of positions: " + distinctList.Count);
     }
 }
