@@ -1,13 +1,14 @@
 ﻿class Monkey
 {
-    int ID;
-    List<int> startingItems;
-    int operation;
-    int test;
-    int trueMonkey;
-    int falseMonkey;
-    char functionMonkey;
-    int howMany = 0;
+    public int ID;
+    public List<int> startingItems = new List<int>();
+    public int operation;
+    public bool isOld = false;
+    public int test;
+    public int trueMonkey;
+    public int falseMonkey;
+    public char functionMonkey;
+    public int howMany = 0;
 
     List<Monkey> chooseMonkeyList(List<Monkey> monkeyList)
     {
@@ -15,10 +16,12 @@
         {
             int chooseMonkey = -1;
             int worrylevel = 0;
-            if (this.functionMonkey == '+')
+            if ((this.functionMonkey == '+') && (isOld == false))
                 worrylevel = item + this.operation;
-            else if (this.functionMonkey == '*')
+            else if ((this.functionMonkey == '*') && (isOld == false))
                 worrylevel = item * this.operation;
+            else
+                worrylevel = item * item;
 
             int itemAfter = decimal.ToInt32(Math.Round(Convert.ToDecimal(worrylevel) / 3));
             if (itemAfter % test == 0)
@@ -53,14 +56,35 @@ class Program
         for (int i = 0; i < textInput.Length; i++)
             textInput[i] = textInput[i].Trim();
 
+        List<Monkey> monkeys = new List<Monkey>();
+
         for (int i = 0; i < (textInput.Count() + 1) / 7; i++)
         {
-            int IDMonkey = Convert.ToInt32(Char.GetNumericValue(textInput[i * 7].Split(' ')[1][0]));
-            Console.WriteLine(textInput[i * 7 + 1].Split(':')[1].Trim().Split(", ")[0]);
-            Console.WriteLine(textInput[i * 7 + 2].Split("old")[1].Trim());
+            Monkey monkey = new Monkey();
+            monkey.ID = Convert.ToInt32(Char.GetNumericValue(textInput[i * 7].Split(' ')[1][0]));
+            foreach (string item in textInput[i * 7 + 1].Split(':')[1].Trim().Split(", "))
+                monkey.startingItems.Add(Convert.ToInt32(item));
+
+            monkey.functionMonkey = textInput[i * 7 + 2].Split("old")[1].Trim()[0];
+            if (textInput[i * 7 + 2].Split("old")[1].Trim().Count() == 1)
+                monkey.isOld = true;
+            else
+                monkey.operation = int.Parse(textInput[i * 7 + 2].Split("old")[1].Trim().Split(' ')[1].ToString());
+
+            monkey.test = int.Parse(textInput[i * 7 + 3].Split("by")[1].Trim());
+            monkey.trueMonkey = int.Parse(textInput[i * 7 + 4].Split("monkey")[1].Trim());
+            monkey.falseMonkey = int.Parse(textInput[i * 7 + 5].Split("monkey")[1].Trim());
+
+            monkeys.Add(monkey);
         }
-
-
+        foreach(var monkey in monkeys)
+        {
+            Console.WriteLine("ID: " + monkey.ID);
+            Console.WriteLine("Function: " + monkey.functionMonkey);
+            Console.WriteLine("Items:");
+            foreach (var item in monkey.startingItems)
+                Console.WriteLine(item);
+        }
 
     }
 }
