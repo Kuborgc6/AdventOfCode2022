@@ -10,7 +10,7 @@
     public char functionMonkey;
     public int howMany = 0;
 
-    List<Monkey> chooseMonkeyList(List<Monkey> monkeyList)
+    public List<Monkey> chooseMonkeyList(List<Monkey> monkeyList)
     {
         foreach (int item in this.startingItems)
         {
@@ -23,7 +23,7 @@
             else
                 worrylevel = item * item;
 
-            int itemAfter = decimal.ToInt32(Math.Round(Convert.ToDecimal(worrylevel) / 3));
+            int itemAfter = (int)((worrylevel / 3));
             if (itemAfter % test == 0)
                 chooseMonkey = this.trueMonkey;
             else
@@ -56,7 +56,9 @@ class Program
         for (int i = 0; i < textInput.Length; i++)
             textInput[i] = textInput[i].Trim();
 
+        int numberRounds = 20;
         List<Monkey> monkeys = new List<Monkey>();
+        List<int> mostActive = new List<int>() {0,0};
 
         for (int i = 0; i < (textInput.Count() + 1) / 7; i++)
         {
@@ -85,6 +87,24 @@ class Program
             foreach (var item in monkey.startingItems)
                 Console.WriteLine(item);
         }
+        for (int i = 0; i < numberRounds; i++)
+        {
+        foreach (var monkey in monkeys)
+            {
+                monkeys = monkey.chooseMonkeyList(monkeys);
+            }
+        }
 
+        foreach (var monkey in monkeys)
+        {
+            Console.WriteLine("ID: " + monkey.ID);
+            Console.WriteLine("Items:");
+            foreach (var item in monkey.startingItems)
+                Console.WriteLine(item);
+            Console.WriteLine("Monkey " + monkey.ID + " inspected items " + monkey.howMany + " times.");
+            if (mostActive.Min() < monkey.howMany)
+                mostActive[mostActive.IndexOf(mostActive.Min())] = monkey.howMany;
+        }
+        Console.WriteLine("The level of monkey business: " + (mostActive[0] * mostActive[1]));
     }
 }
